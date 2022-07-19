@@ -1,25 +1,42 @@
+import {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+export function replaceCamelWithSpaces(colorName) {
+    return colorName.replace(/\B([A-Z])\B/g, ' $1');
+};
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [disableButton, setButtonState] = useState(false);
+    const [buttonColor, setButtonColor] = useState('blue');
+
+    const handleChange = () => {
+        setButtonState(!disableButton);
+    }
+
+    const changeButtonColor = () => {
+        if(buttonColor === 'blue') {
+            setButtonColor('red');
+        }
+        else {
+            setButtonColor('blue');
+        }
+    }
+
+    return (
+        <div>
+            <button
+                disabled={disableButton}
+                style={{backgroundColor: disableButton ? 'gray' : buttonColor}}
+                onClick={changeButtonColor}
+            >
+                Test Button
+            </button>
+
+            <input id={'checkbox'} type={'checkbox'} onChange={handleChange}/>
+            <label htmlFor={'checkbox'}>Disable Button</label>
+        </div>
+    );
 }
 
 export default App;
